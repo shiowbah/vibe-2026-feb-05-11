@@ -105,3 +105,33 @@ class TotoGenerator extends HTMLElement {
 }
 
 customElements.define('toto-generator', TotoGenerator);
+
+// Theme toggle logic
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the theme
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Switch to Day Mode';
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggle.textContent = 'Switch to Night Mode';
+        }
+    };
+
+    // Load saved theme from localStorage or default to 'day'
+    const savedTheme = localStorage.getItem('theme') || 'day';
+    applyTheme(savedTheme);
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'day';
+        const newTheme = currentTheme === 'dark' ? 'day' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+    });
+});
+
